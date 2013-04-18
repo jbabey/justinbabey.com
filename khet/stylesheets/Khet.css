@@ -1,6 +1,6 @@
 /* Begin sprite styles */
 .blank {
-    background-image: url(images/blanks.png);
+    background-image: url(../images/blanks.png);
     width: 50px;
     height: 50px;
 }
@@ -18,13 +18,13 @@
 }
 
 .red.pyramid, .red.pyramid.northeast {
-    background-image: url(images/redPyramids.png);
+    background-image: url(../images/redPyramids.png);
     width: 50px;
     height: 50px;
 }
 
 .blue.pyramid, .blue.pyramid.northeast {
-    background-image: url(images/bluePyramids.png);
+    background-image: url(../images/bluePyramids.png);
     width: 50px;
     height: 50px;
 }
@@ -42,13 +42,13 @@
 }
 
 .red.sphinx, .red.sphinx.north {
-    background-image: url(images/redSphinxes.png);
+    background-image: url(../images/redSphinxes.png);
     width: 50px;
     height: 50px;
 }
 
 .blue.sphinx, .blue.sphinx.south {
-    background-image: url(images/blueSphinxes.png);
+    background-image: url(../images/blueSphinxes.png);
     width: 50px;
     height: 50px;
 }
@@ -58,13 +58,13 @@
 }
 
 .red.scarab, .red.scarab.backslash {
-    background-image: url(images/redScarabs.png);
+    background-image: url(../images/redScarabs.png);
     width: 50px;
     height: 50px;
 }
 
 .blue.scarab, .blue.scarab.backslash {
-    background-image: url(images/blueScarabs.png);
+    background-image: url(../images/blueScarabs.png);
     width: 50px;
     height: 50px;
 }
@@ -74,13 +74,13 @@
 }
 
 .red.obelisk, .red.obelisk.north {
-    background-image: url(images/redObelisks.png);
+    background-image: url(../images/redObelisks.png);
     width: 50px;
     height: 50px;
 }
 
 .blue.obelisk, .blue.obelisk.north {
-    background-image: url(images/blueObelisks.png);
+    background-image: url(../images/blueObelisks.png);
     width: 50px;
     height: 50px;
 }
