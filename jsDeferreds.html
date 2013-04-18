@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>JavaScript Deferreds & Promises</title>
+		<link rel="stylesheet" href="stylesheets/jsDeferreds.css"  />
+		<link rel="stylesheet" href="stylesheets/shCoreDefault.css"/>
+		<style type="text/css">
+			.syntaxhighlighter {
+				height: 500px;
+				overflow-x: hidden !important;
+			}
+			
+			.big {
+				font-size: 2em;	
+			}
+			
+			.giant {
+				font-size: 15em;	
+			}
+			
+			.center { 
+				text-align: center;
+			};
+		</style>
+	</head>
+	
+	<body class="impress-not-supported">
+		<div class="fallback-message">
+    		<p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    		<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+		</div>
+		
+		<div id="impress">
+			<div id="title" class="step" data-x="2500" data-y="-2000" data-scale="3">
+				<p class="big center">JavaScript:</p>
+				<p class="big center">Deferreds &</p>
+				<p class="big center">Promises</p>
+			</div>
+			
+			<div id="about" class="step" data-x="2500" data-y="-1000" data-scale="2">
+				<p class="center">A presentation by <a href="mailto:justin.babey@gmail.com" title="justin.babey@gmail.com">Justin Babey</a></p>
+				<p class="center">Built on the <a href="https://github.com/bartaz/impress.js" target="docs">Impress.js framework</a></p>
+				<p class="center">Uses the <a href="http://alexgorbatchev.com/SyntaxHighlighter/" target="docs">SyntaxHighlighter</a> plugin</p>
+			</div>
+			
+			<div id="slide1" class="step slide" data-x="0" data-y="0">
+				<p>History Lesson!</p>
+				
+				<blockquote>
+					"<b>Future</b>, <b>Promise</b>, and <b>Delay</b> refer to constructs used for synchronizing in
+					some concurrent programming languages.<br /><br />
+					
+					They describe an object that acts as a proxy for a result
+					that is initially unknown, usually because the computation of its value is yet incomplete."
+					<p><i>&nbsp;&nbsp;&nbsp;-Wikipedia</i></p>
+				</blockquote>
+				<br />
+				<p>1976 by Daniel P. Friedman and David Wise</p>
+			</div>
+			
+			<div id="slide2" class="step slide" data-x="1000" data-y="0">
+				<p>JavaScript is single threaded!</p>
+				<br />
+				<p>Rich dynamic web applications require asynchronous JavaScript:</p>
+				<br />
+				<ul>
+					<li>Data fetching (AJAX)</li>
+					<li>Data processing (Web Workers)</li>
+					<li>Oberserver & Pub/Sub Patterns</li>
+					<li>Animations</li>
+					<li>Polling</li>
+				</ul>
+			</div>
+			
+			<div id="slide3" class="step slide" data-x="2000" data-y="0">
+				<p><a href="http://callbackhell.com/" target="docs">Handling asynchronous JavaScript with callbacks gets messy:</a></p>
+				
+				<pre class="brush: js toolbar: false">
+					getTemplate(set, function(item) {
+  						if (item) {
+  							someOtherFunction(item, function (index) {
+  								if (index > 0) {
+  								    $.ajax({
+  								    	...
+  								    	success: function (data) {
+  								   			$elem.animate(..., function () { 
+  								   				...
+  								   			});
+  								   		}
+  								   	});
+  								}
+  							});
+  						}
+  					});
+				</pre>
+			</div>
+			
+			<div id="slide4" class="step slide" data-x="3000" data-y="0">
+				<p>One solution: <a target="docs" href="http://api.jquery.com/category/deferred-object/">Deferreds</a></p>
+				<blockquote>
+					 A chainable utility object that can register multiple 
+					 callbacks into callback queues, invoke callback queues,
+					 and relay the success or failure state of any synchronous 
+					 or asynchronous function.
+				</blockquote>
+				
+				<p><a href="http://api.jquery.com/jQuery.ajax/" target="docs">$.ajax uses a Deferred object internally:</a></p>
+				
+				<blockquote>
+					The jqXHR objects returned by $.ajax() as of jQuery 1.5
+					implement the Promise interface, giving them all the 
+					properties, methods, and behavior of a Promise.
+				</blockquote>
+			</div>
+			
+			<div id="slide5" class="step slide" data-x="4000" data-y="0">
+				<p><a href="http://jsfiddle.net/bZ4PR/" target="examples">A simple example</a></p>
+				
+				<pre class="brush:js toolbar:false">
+					var someAsyncFunction = function () {
+    					var deferred = new $.Deferred();
+
+    					setTimeout(function () {
+        					deferred.resolve('it worked');            
+    					}, 1000);
+
+    					return deferred.promise();
+					};
+					
+					someAsyncFunction().then(function (data) {
+						...
+    				});
+				</pre>
+			</div>
+			
+			<div id="slide6" class="step slide" data-x="5000" data-y="0">
+				<p><a href="http://jsfiddle.net/bZ4PR/2/" target="example">Solving the callback problem with Deferred Objects:</a></p>
+				
+				<pre class="brush:js toolbar: false">
+					$.when(getTemplate(),
+           				   getData1(),
+           			       getData2())
+    				.then(function (templateData, data1, data2) {
+        				// bind data to the template and display  
+    				})
+    				.fail(function (error) {
+        				$('div').text('There was a problem: ' + error); 
+    				});
+				</pre>
+			</div>
+			
+			<div id="end" class="step" data-x="2500" data-y="-1000" data-scale="5">
+			</div>
+		</div>
+		
+		<div class="hint">
+    		<p>Use the left and right arrows to move from frame to frame.</p>
+    		<p>Press "B" to go back to the beginning.</p>
+    		<p>Press "E" to go directly to the end.</p>
+		</div>
+	</body>
+	
+	<script type="text/javascript" src="javascripts/shCore.js"></script>
+	<script type="text/javascript" src="javascripts/shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	<script src="javascripts/impress.js"></script>
+	<script>
+		impress().init();
+		
+		document.onkeypress = function (e) {
+			var key = e.which;
+			
+			switch (key) {
+				case 98:
+				    impress().goto('title', 1000);
+				    return false;
+				case 101:
+				    impress().goto('end', 1000);
+				    return false;
+			}
+		};
+	</script>
+</html>

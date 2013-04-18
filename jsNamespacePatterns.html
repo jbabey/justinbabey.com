@@ -1,0 +1,310 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>JavaScript Namespacing</title>
+		<link rel="stylesheet" href="stylesheets/jsNamespacePatterns.css"  />
+		<link rel="stylesheet" href="stylesheets/shCoreDefault.css"/>
+		<style type="text/css">
+			.syntaxhighlighter {
+				height: 540px;
+			}
+			
+			.step.present {
+				z-index: 0;
+			}
+			
+			.step.past, .step.future {
+				z-index: -1;	
+			}
+			
+			.step.past.behind, .step.future.behind {
+				z-index: -2;	
+			}
+		</style>
+	</head>
+	
+	<body class="impress-not-supported">
+		<div class="fallback-message">
+    		<p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    		<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+		</div>
+		
+		<div id="impress">
+			<div id="title" class="step" data-x="0" data-y="0" data-scale="3">
+				<h1>JavaScript</h1>
+				<h1>Namespacing</h1>
+				<h1>Patterns</h1>
+			</div>
+			
+			<div id="about" class="step" data-x="1000" data-y="0" data-scale="2">
+				<p>A presentation by <a href="mailto:justin.babey@gmail.com" title="justin.babey@gmail.com">Justin Babey</a></p>
+				<p>Built on the <a href="https://github.com/bartaz/impress.js" target="docs">Impress.js framework</a></p>
+				<p>Uses the <a href="http://alexgorbatchev.com/SyntaxHighlighter/" target="docs">SyntaxHighlighter</a> plugin</p>
+			</div>
+			
+			<div id="slide1" class="step slide" data-x="-1250" data-y="-1000">
+				<q>What is a namespacing pattern?</q>
+				<q>Why should I use a namespacing pattern?</q>
+			</div>
+			
+			<div id="slide1behind" class="step slide behind" data-x="-1200" data-y="-950">
+				<p><a href="http://net.tutsplus.com/tutorials/javascript-ajax/digging-into-design-patterns-in-javascript/" target="_blank">tutsplus</a> defines a pattern as:</p>
+				<br />
+				<ul>
+					<li><b>proven</b> solutions to software development problems</li>
+					<li><b>scalable</b> as they usually are structured and have rules that you should follow</li>
+					<li><b>reusable</b> for similar problems</li>
+				</ul>
+				<br />
+				<p>Other benefits:</p>
+				<br />
+				<ul>
+					<li>organization</li>
+					<li>modularity</li>
+					<li>loose coupling</li>
+					<li>unit test friendly</li>
+					<li>protects the global namespace</li>
+					<li>private scopes</li>
+				</ul>
+			</div>
+			
+			<div id="slide2" class="step slide" data-x="0" data-y="-1000">
+				<p><a href="http://jsfiddle.net/jbabey/tfJz3/1" target="example">Object Literal Pattern</a></p>
+				<pre class="brush: js; toolbar: false;">
+					var myNamespace = {
+						member1: 'foo',
+    					member2: 'bar',
+    					function1: function (test) {
+        					return test + ' shenanigans';    
+    					},
+    					function2: function () {
+        					return this.member1 + 
+        						myNamespace.member2;    
+    					}
+					};
+				</pre>
+			</div>
+			
+			<div id="slide2behind" class="step slide behind" data-x="50" data-y="-950">
+				<p>Pros:</p>
+				<br />
+				<ul>
+					<li>Easy to read, write, and understand</li>
+					<li>Preserves the global namespace</li>
+					<li>Organization</li>
+				</ul>
+				<br />
+				<p>Cons:</p>
+				<br />
+				<ul>
+					<li>Syntax is annoying for adding/removing properties</li>
+					<li>Code is re-executed every call (no closure)</li>
+					<li>Impossible to make a private member</li>
+				</ul>
+			</div>
+			
+			<div id="slide3" class="step slide" data-x="1250" data-y="-1000">
+				<a href="http://jsfiddle.net/jbabey/tfJz3/8/" target="example">Classic Closure</a>
+				<pre class="brush: js; toolbar: false;">
+					var things = ['foo', 'bar', 'bat', 'baz', 'bang'];
+
+					var button;
+					for (var i = 0; i < things.length; i++) {
+    					button = document.createElement('input');
+    					button.type = 'button';
+    					button.value = things[i];
+    					button.onclick = function () {
+        					alert(things[i]);  
+    					};
+    					document.appendChild(button);
+					}
+				</pre>
+			</div>
+			
+			<div id="slide3behind" class="step slide behind" data-x="1300" data-y="-950">
+				<a href="http://jsfiddle.net/jbabey/tfJz3/9/" target="example">Getting your closure fix</a>
+				<pre class="brush: js; toolbar: false;">
+					button.onclick = function (index) {
+        				return function () {
+            				alert(things[index]);  
+        				};
+    				}(i);
+				</pre>
+			</div>
+			
+			<div id="slide4" class="step slide" data-x="1250" data-y="1000" data-rotate="180">
+				<p><a href="http://jsfiddle.net/jbabey/tfJz3/3/" target="example">Immediately Invoked Function Expression (IIFE)</a></p>
+				
+				<pre class="brush: js; toolbar: false;">
+					var myNamespace = (function ($, _, undefined) {
+    					var member1 = 'foo';
+    					var member2 = 'bar';
+    
+    					return {
+        					function1: function (test) {
+            					return test + ' shenanigans';    
+        					},
+        					function2: function () {
+            					return member1 + member2;    
+        					}
+    					};
+					})(jQuery, otherNamespace || {});
+				</pre>
+			</div>
+			
+			<div id="slide4behind" class="step slide behind" data-x="1200" data-y="950" data-rotate="180">
+				<p>Pros:</p>
+				<br />
+				<ul>
+					<li>Allows private members</li>
+					<li>Allows global imports</li>
+					<li>Employs a closure</li>
+				</ul>
+				<br />
+				<p>Cons:</p>
+				<br />
+				<ul>
+					<li>Syntax is different for private and public members</li>
+					<li>Giant return statement can get cumbersome</li>
+					<li>More complicated than an object literal</li>
+				</ul>
+			</div>
+			
+			<div id="slide5" class="step slide" data-x="0" data-y="1000" data-rotate="180">
+				<p><a href="http://jsfiddle.net/jbabey/tfJz3/6/" target="example">Revealing Module Pattern</a></p>
+				
+				<pre class="brush: js; toolbar: false;">
+					var myNamespace = (function ($, _, undefined) {
+						// Privates
+    					var member1 = 'foo';
+    					var member2 = 'bar';
+    					
+    					// Publics
+    					var function1 = function (test) {
+        					return test + ' shenanigans';    
+    					};
+    					var function2 = function () {
+        					return member1 + member2;
+    					};
+    
+    					return {
+        					function1: function1,
+        					function2: function2
+    					};
+					})(jQuery, otherNamespace || {});
+				</pre>
+			</div>
+			
+			<div id="slide5behind" class="step slide behind" data-x="-50" data-y="950" data-rotate="180">
+				<p>Pros:</p>
+				<br />
+				<ul>
+					<li>Same syntax for private and public members</li>
+					<li>Concise return statement</li>
+				</ul>
+				<br />
+				<p>Cons:</p>
+				<br />
+				<ul>
+					<li>Relies on comments for separation of private and public members</li>
+					<li>Adding/removing public members requires changes in two places</li>
+				</ul>
+			</div>
+			
+			<div id="slide6" class="step slide" data-x="-1250" data-y="1000" data-rotate="180">
+				<a href="http://jsfiddle.net/jbabey/tfJz3/12/" target="example">True getters and setters! ...</a>
+				<pre class="brush: js; toolbar: false;">
+					var test = (function() {
+    					var _value = 'foo';
+    
+    					return {
+        					get value() { 
+            					return _value + ' worked!'; 
+        					},
+        					set value(newValue) {
+            					_value = newValue;
+        					}
+    					};
+					})();
+					
+					test.value; // 'foo worked!'
+					test.value = 'bar';
+					test.value; // 'bar worked!'
+				</pre>
+			</div>
+			
+			<div id="slide6behind" class="step slide behind" data-x="-1300" data-y="950" data-rotate="180">
+				<a href="http://jsfiddle.net/jbabey/tfJz3/15/" target="example">...and something that will work in IE8</a>
+				<pre class="brush: js; toolbar: false;">
+					var test = (function() {
+    					var value = 'foo';
+    					var getValue = function() {
+        					return value + ' worked!';
+    					};
+    					var setValue = function(newValue) {
+        					value = newValue;
+    					};
+    
+    					return {
+        					getValue: getValue,
+        					setValue: setValue
+    					};
+					})();
+					
+					test.getValue(); // 'foo worked!'
+					test.setValue('bar');
+					test.getValue(); // 'bar worked!'
+				</pre>
+			</div>
+			
+			<div id="any" class="step" data-x="-1320" data-y="-315" data-rotate="45" data-scale="0.05">
+				Any
+			</div>
+			
+			<div id="end" class="step" data-x="-1325" data-y="-313" 
+				data-rotate-z="45" 
+				data-rotate-x="25" 
+				data-rotate-y="25"
+				data-scale="0.05">
+				<span class="q">Q</span>
+				<span class="u">u</span>
+				<span class="e">e</span>
+				<span class="s1">s</span>
+				<span class="t">t</span>
+				<span class="i">i</span>
+				<span class="o">o</span>
+				<span class="n">n</span>
+				<span class="s2">s</span>
+				<span class="qmark">?</span>
+			</div>
+		</div>
+		
+		<div class="hint">
+    		<p>Use the left and right arrows to move from frame to frame.</p>
+    		<p>Press "B" to go back to the beginning.</p>
+    		<p>Press "E" to go directly to the end.</p>
+		</div>
+	</body>
+	
+	<script type="text/javascript" src="javascripts/shCore.js"></script>
+	<script type="text/javascript" src="javascripts/shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	<script src="javascripts/impress.js"></script>
+	<script>
+		impress().init();
+		
+		document.onkeypress = function (e) {
+			var key = e.which;
+			
+			switch (key) {
+				case 98:
+				    impress().goto('title', 1000);
+				    return false;
+				case 101:
+				    impress().goto('end', 1000);
+				    return false;
+			}
+		};
+	</script>
+</html>
