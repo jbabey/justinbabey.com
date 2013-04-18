@@ -1,0 +1,108 @@
+/* Begin sprite styles */
+.blank {
+    background-image: url(images/blanks.png);
+    width: 50px;
+    height: 50px;
+}
+
+.blank.horizontalLaser {
+    background-position-x: -50px;
+}
+
+.blank.verticalLaser {
+    background-position-x: -100px;
+}
+
+.blank.verticalLaser.horizontalLaser {
+    background-position-x: -150px;
+}
+
+.red.pyramid, .red.pyramid.northeast {
+    background-image: url(images/redPyramids.png);
+    width: 50px;
+    height: 50px;
+}
+
+.blue.pyramid, .blue.pyramid.northeast {
+    background-image: url(images/bluePyramids.png);
+    width: 50px;
+    height: 50px;
+}
+
+.pyramid.southeast {
+    background-position-x: -50px;
+}
+
+.pyramid.southwest {
+    background-position-x: -100px;
+}
+
+.pyramid.northwest {
+    background-position-x: -150px;
+}
+
+.red.sphinx, .red.sphinx.north {
+    background-image: url(images/redSphinxes.png);
+    width: 50px;
+    height: 50px;
+}
+
+.blue.sphinx, .blue.sphinx.south {
+    background-image: url(images/blueSphinxes.png);
+    width: 50px;
+    height: 50px;
+}
+
+.sphinx.east, .sphinx.west {
+    background-position-x: -50px;
+}
+
+.red.scarab, .red.scarab.backslash {
+    background-image: url(images/redScarabs.png);
+    width: 50px;
+    height: 50px;
+}
+
+.blue.scarab, .blue.scarab.backslash {
+    background-image: url(images/blueScarabs.png);
+    width: 50px;
+    height: 50px;
+}
+
+.scarab.forwardslash {
+    background-position-x: -50px;
+}
+
+.red.obelisk, .red.obelisk.north {
+    background-image: url(images/redObelisks.png);
+    width: 50px;
+    height: 50px;
+}
+
+.blue.obelisk, .blue.obelisk.north {
+    background-image: url(images/blueObelisks.png);
+    width: 50px;
+    height: 50px;
+}
+
+.obelisk.east {
+    background-position-x: -50px;
+}
+
+.obelisk.south {
+    background-position-x: -100px;
+}
+
+.obelisk.west {
+    background-position-x: -150px;
+}
+
+/* TODO: How to handle the multiple laser types for scarab? */
+.withLaser {
+    background-position-y: -50px;
+}
+
+.destroyed {
+    background-position-y: -100px;
+}
+/* End sprite styles */
