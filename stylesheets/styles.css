@@ -849,3 +849,16 @@ section #title .credits.right {
     display: none;
   }
 }
+
+.forkBanner {
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    border: 0;
+}
+
+.stackoverflowBanner {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
