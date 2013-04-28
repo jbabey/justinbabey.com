@@ -115,6 +115,7 @@ var Khet = (function ($) {
         $('<input>')
             .attr('type', 'button')
             .attr('value', 'FIRIN MAH LAZOR')
+            .attr('id', 'fireButton')
             .css({
                 position: 'absolute',
                 left: cols * tileWidth,
@@ -395,11 +396,14 @@ var Khet = (function ($) {
             }
         }
 
-        // TODO: disable everything during these 2 seconds
-        // in 2 second, hide the laser and switch turns
+        // remove the click event from the fire button
+        $('#fireButton').unbind('click');
+        
+        // in 2 second, hide the laser, switch turns, and rebind the click event
         setTimeout(function () {
             switchTurns();
             $(selectors.allLasers).removeClass(classes.withLaser + ' ' + classes.verticalLaser + ' ' + classes.horizontalLaser);
+            $('#fireButton').click(laserClickHandler);
         }, 2000);
     };
     var isPositionOnBoard = function (position) {
