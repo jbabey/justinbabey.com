@@ -4,56 +4,105 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>This website is not a toy.</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="stylesheets/index.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="favicon.png" />
 </head>
+
 <body>
-    <a href="https://github.com/jbabey/justinbabey.com">
-        <img class="forkBanner" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" />
-    </a>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="#">justinbabey.com</a>
+                <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                        <a href="https://github.com/jbabey/justinbabey.com">Fork me on GitHub!</a>
+                    </p>
+                    <ul class="nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <a href="http://stackoverflow.com/users/386152/jbabey">
-        <img src="http://stackoverflow.com/users/flair/386152.png?theme=dark" 
-            width="208" height="58" class="stackoverflowBanner"
-            alt="profile for jbabey at Stack Overflow" title="profile for jbabey at Stack Overflow">
-    </a>
-
-    <div class="wrapper">
-        <br />
-
-        <div id="title">
-            <h1>This website is real.</h1>
-            <hr>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Events</li>
+                        <li><a target="_blank" href="http://newenglandgivecamp.org/">April 26-28: New England Give Camp 2013</a></li>
+                        <li><a target="_blank" href="http://www.ctdotnet.org/code-camp-6/">May 18: Hartford .NET Code Camp 6</a></li>
+                        <li><a target="_blank" href="http://hartfordjs.com/">June TBD: HartfordJS Meeting</a></li>
+                        <li class="nav-header">Presentations</li>
+                        <li><a target="_blank" href="presentations/jsDeferreds.html">Deferreds & Promises</a></li>
+                        <li><a target="_blank" href="presentations/jsNamespacePatterns.html">Namespacing Patterns</a></li>
+                        <li><a target="_blank" href="presentations/jsRefactoring.html">Refactoring</a></li>
+                        <li class="nav-header">Tinkering</li>
+                        <li><a target="_blank" href="khet/Khet.html">Khet game</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="hero-unit">
+                    <h1>Hello, world!</h1>
+                    <p>Buffalo buffalo buffalo buffalo buffalo buffalo buffalo</p>
+                    <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                    </div>
+                    <div class="span4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                    </div>
+                    <div class="span4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                    </div>
+                    <div class="span4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                    </div>
+                    <div class="span4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <h3>Important events:</h3>
-        <ul>
-            <li><a target="_blank" href="http://newenglandgivecamp.org/">April 26-28: New England Give Camp 2013</a></li>
-            <li><a target="_blank" href="http://www.ctdotnet.org/code-camp-6/">May 18: Hartford .NET Code Camp 6</a></li>
-            <li><a target="_blank" href="http://hartfordjs.com/">June TBD: HartfordJS Meeting</a></li>
-        </ul>
+        <hr>
 
-        <h3>Presentations:</h3>
-        <ul>
-            <li><a target="_blank" href="presentations/jsDeferreds.html">Deferreds & Promises</a></li>
-            <li><a target="_blank" href="presentations/jsNamespacePatterns.html">Namespacing Patterns</a></li>
-            <li><a target="_blank" href="presentations/jsRefactoring.html">Refactoring</a></li>
-        </ul>
+        <footer>
+            <p>&copy; Company 2013</p>
+        </footer>
 
-        <h3>Tinkering:</h3>
-        <ul>
-            <li><a target="_blank" href="khet/Khet.html">Khet game</a></li>
-        </ul>
-        <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     </div>
 </body>
 </html>
