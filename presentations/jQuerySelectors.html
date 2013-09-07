@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>jQuery Selector Optimization</title>
+		<link rel="stylesheet" href="stylesheets/jQuerySelectors.css"  />
+		<link rel="stylesheet" href="stylesheets/shCoreDefault.css"/>
+	</head>
+	
+	<body class="impress-not-supported">
+		<div class="fallback-message">
+    		<p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+		</div>
+		
+		<div id="impress">
+			<div id="title" class="step" data-x="0" data-y="0" data-scale="2">
+				<p class="big center">jQuery</p>
+				<p class="big center">Selector</p>
+				<p class="big center">Optimization</p>
+			</div>
+			
+			<div id="about" class="step" data-x="0" data-y="750" data-scale="2">
+				<p class="center">A presentation by <a href="mailto:justin.babey@gmail.com" title="justin.babey@gmail.com">Justin Babey</a></p>
+				<p class="center">Built on the <a href="https://github.com/bartaz/impress.js" target="docs">Impress.js framework</a></p>
+				<p class="center">Uses the <a href="http://alexgorbatchev.com/SyntaxHighlighter/" target="docs">SyntaxHighlighter</a> plugin</p>
+			</div>
+			
+			<div id="slide1" class="step slide" data-x="0" data-rotate="0" data-y="-1050">
+				<h1>Small gains</h1>
+				<br />
+				<br />
+				<ul>
+				    <li>
+						Improving one selector may not provide a noticable gain,
+						but improving every selector across the application will
+				    </li>
+					<br />
+				    <li>
+						Write new selectors properly, fix old selectors if you're in the code already
+				    </li>
+					<br />
+				    <li>
+						Changes may not be foolproof, modified selectors should be smoke-tested
+				    </li>
+				</ul>
+			</div>
+			
+			<div id="slide2" class="step slide" data-x="1100" data-rotate="45" data-y="-600">
+				<h1>jQuery is a javaScript library</h1>
+				<br />
+				<br />
+				<span style="color:red">Slower:</span>
+				<br />
+				<pre class="brush: js; toolbar: false;">
+					var element = $('#foo');
+					var elements = $('.bar');
+					$.each([1, 2, 3], function () { ... });
+				</pre>
+				
+				<span style="color:green">Faster:</span>
+				<br />
+				<pre class="brush: js; toolbar: false;">
+					var element = document.getElementById('foo');
+					var elements = document.getElementsByClassName('bar');
+					[1, 2, 3].forEach(function () { ... });				
+				</pre>
+				<a href="http://jsperf.com/id-selector-jquery-vs-native" target="perf">Proof #1</a>,
+				<a href="http://jsperf.com/class-selector-jquery-vs-native" target="perf">Proof #2</a>, and
+				<a href="http://jsperf.com/foreach-jquery-vs-native" target="perf">Proof #3</a>
+			</div>
+			
+			<div id="slide3" class="step slide" data-x="1550" data-rotate="90" data-y="500">
+				<h1>Be as specific as possible</h1>
+				<br />
+				<br />
+				ID > NodeType > Class > Other
+				<br />
+				<pre class="brush: js; toolbar: false;">
+				    // worst
+					var element = $('[someAttribute="someValue"]');
+					
+					// better
+					var element = $('.bar');
+					
+					// almost
+					var element = $('div');
+					
+					// best
+					var element = $('#foo');
+				</pre>
+				<a href="http://jsperf.com/be-as-specific-as-possible" target="perf">Proof</a>
+			</div>
+				
+			<div id="slide4" class="step slide" data-x="1100" data-rotate="135" data-y="1600">
+				<h1>Avoid universal selection</h1>
+				<br />
+				<br />
+				Never use explicit universal selectors, and avoid implicit whenever possible
+				<br />
+				<pre class="brush: js; toolbar: false;">
+				    // Explicit
+					var element = $('*.bar');
+					
+					var element = $('#foo > *');
+					
+					// Implicit
+					var element = $('.bar');
+				</pre>
+			</div>
+			
+			<div id="slide5" class="step slide" data-x="0" data-rotate="180" data-y="2050">
+				<h1>Use narrowing methods</h1>
+				<br />
+				<br />
+				Find the nearest static unique ID, and narrow from there
+				<br />
+				<pre class="brush: js; toolbar: false;">
+				    // use .find() for children
+					var element = $('#static').find('.bar');
+					
+					// use .siblings() for siblings
+					var element = $('#static').siblings('.bar');
+				</pre>
+				
+				<a href="http://jsperf.com/jquery-with-find-vs-raw-jquery" target="perf">Proof #1</a> and
+				<a href="http://jsperf.com/jquery-with-siblings-vs-raw-jquery" target="perf">Proof #2</a>
+			</div>
+			
+			<div id="slide6" class="step slide" data-x="-1100" data-rotate="225" data-y="1600">
+			    <h1>Chaining & Caching</h1>
+				<br />
+				<pre class="brush: js; toolbar: false;">
+				    // what is wrong here?
+					$('.bar').val('baz');
+					$('.bar').attr('someAttribute', 'someValue');
+					$('.bar').trigger('myEvent');
+					
+					// faster
+					var bar = $('.bar');
+					bar.val('baz');
+					bar.attr('someAttribute', 'someValue');
+					bar.trigger('myEvent');
+					
+					// cleaner
+					$('.bar').val('baz').attr('someAttribute', 'someValue')
+					    .trigger('myEvent');
+				</pre>
+				
+				<a href="http://jsperf.com/chaining-and-caching" target="perf">Proof</a>
+			</div>
+			
+			<div id="slide7" class="step slide" data-x="-1550" data-rotate="270" data-y="500">
+			    <h1>General to specific</h1>
+				<br />
+				<br />
+				jQuery selector engine (Sizzle) parses from right to left
+				<br /><br />
+				Break complicated selectors into multiple simple ones
+				<br />
+				<pre class="brush: js; toolbar: false;">
+				    // slower
+					var element = $('#foo > .bar');
+					
+					// faster
+					var element = $('#foo').children('.bar');
+				</pre>
+				
+				<a href="http://jsperf.com/general-to-specific" target="perf">Proof</a>
+			</div>
+			
+			<div id="slide8" class="step slide" data-x="-1100" data-rotate="315" data-y="-600">
+			    <h1>Avoid fragile selectors</h1>	
+				<br />
+				<br />
+				Selectors should be as agnostic of your markup as possible
+				<br />
+				<pre class="brush: js; toolbar: false;">
+				    // bad
+					var element = $('#container table tr td div 
+					    span[attribute="value"] :not("#foo") > 
+						#innerContainer .bar:first');
+					
+					// good
+					var element = $('#innerContainer').find('.bar:first');
+				</pre>
+			</div>
+			
+			<div id="end" class="step" data-x="0" data-y="500" data-rotate="360" data-scale="4" style="z-index: -1">
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript" src="scripts/shCore.js"></script>
+	<script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="scripts/impress.js"></script>
+	<script>
+	    SyntaxHighlighter.all();
+
+		impress().init();
+		
+		document.onkeypress = function (e) {
+			var key = e.which;
+			
+			switch (key) {
+				case 98:
+				    impress().goto('title', 1000);
+				    return false;
+				case 101:
+				    impress().goto('end', 1000);
+				    return false;
+			}
+		};
+	</script>
+</html>
