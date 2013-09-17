@@ -1,3 +1,5 @@
+/* TODO: Convert this to LESS */
+
 /* Begin sprite styles */
 .blank {
     background-image: url(../images/blanks.png);
@@ -95,6 +97,18 @@
 
 .obelisk.west {
     background-position-x: -150px;
+}
+
+.red.pharoah {
+    background-image: url(../images/redPharoahs.png);
+    width: 50px;
+    height: 50px;
+}
+
+.blue.pharoah {
+    background-image: url(../images/bluePharoahs.png);
+    width: 50px;
+    height: 50px;
 }
 
 /* TODO: How to handle the multiple laser types for scarab? */

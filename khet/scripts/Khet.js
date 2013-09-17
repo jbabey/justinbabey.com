@@ -21,7 +21,7 @@ var Khet = (function ($) {
     var selectors = {
         blank: '.blank',
         allLasers: '.withLaser, .verticalLaser, .horizontalLaser',
-        movablePieces: '.pyramid, .scarab, .obelisk',
+        movablePieces: '.pyramid, .scarab, .obelisk, .pharoah',
         // the turn variable stores who's turn it is
         getRotatablePieces: function () {
             return '.pyramid.' + turn + ', .sphinx.' + turn + ', .scarab.' + turn + ', .obelisk.' + turn;
@@ -48,7 +48,8 @@ var Khet = (function ($) {
         obelisk: 'obelisk',
         backslash: 'backslash',
         forwardslash: 'forwardslash',
-        destroyed: 'destroyed'
+        destroyed: 'destroyed',
+        pharoah: 'pharoah'
     };
     var dataKeys = {
         col: 'col',
@@ -159,7 +160,9 @@ var Khet = (function ($) {
                 { classes: [classes.obelisk, classes.red, classes.south].join(' '), col: 4, row: 0 },
                 { classes: [classes.obelisk, classes.red, classes.south].join(' '), col: 6, row: 0 },
                 { classes: [classes.obelisk, classes.blue, classes.north].join(' '), col: 3, row: 7 },
-                { classes: [classes.obelisk, classes.blue, classes.north].join(' '), col: 5, row: 7 }
+                { classes: [classes.obelisk, classes.blue, classes.north].join(' '), col: 5, row: 7 },
+                { classes: [classes.pharoah, classes.red].join(' '), col: 5, row: 0 },
+                { classes: [classes.pharoah, classes.blue].join(' '), col: 4, row: 7 }
         ];
 
         var currentPiece;
@@ -466,6 +469,27 @@ var Khet = (function ($) {
                 return directions.left;
         }
     };
+    var handleObeliskCollisions = function (currentTile, laserDirection) {
+        if (!((currentTile.hasClass(classes.north) && laserDirection === directions.down) ||
+            (currentTile.hasClass(classes.east) && laserDirection === directions.left) ||
+            (currentTile.hasClass(classes.south) && laserDirection === directions.up) ||
+            (currentTile.hasClass(classes.west) && laserDirection === directions.right))) {
+            destroyPiece(currentTile);
+        }
+
+        return undefined;
+    };
+    var destroyPiece = function (tileToDestroy) {
+        tileToDestroy.addClass(classes.destroyed);
+
+        setTimeout(function () {
+            // ui-draggable is the class that tells jQuery draggable that the piece can be drag/dropped on
+            tileToDestroy.removeClass(tileToDestroy.get(0).className).addClass(classes.blank + ' ui-draggable');
+        }, 2000);
+    };
+    var gameOver = function () {
+
+    };
     var handleCollisions = function (currentTile, laserDirection) {
         // TODO: obelisk and pharoah collisions
         switch (true) {
@@ -480,12 +504,7 @@ var Khet = (function ($) {
 
                 if (!newDirection) {
                     // if no direction was returned, it hit the back of a pyramid, destroy the piece
-                    currentTile.addClass(classes.destroyed);
-
-                    setTimeout(function () {
-                        // ui-draggable is the class that tells jQuery draggable that the piece can be drag/dropped on
-                        currentTile.removeClass(currentTile.get(0).className).addClass(classes.blank + ' ui-draggable');
-                    }, 2000);
+                    destroyPiece(currentTile);
 
                     // returning undefined to stop the laser from continuing in laserClickHandler
                     return undefined;
@@ -498,6 +517,9 @@ var Khet = (function ($) {
                 var newDirection = getScarabDirection(laserDirection, currentTile);
 
                 return newDirection;
+            case currentTile.hasClass(classes.obelisk):
+                debugger;
+                return handleObeliskCollisions(currentTile, laserDirection);
             case currentTile.hasClass(classes.blank):
                 // the laser is passing over a blank tile, add the laser and continue in the same direction
                 if (laserDirection === directions.up || laserDirection === directions.down) {
